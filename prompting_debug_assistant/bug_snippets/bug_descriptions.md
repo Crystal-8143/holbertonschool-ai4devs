@@ -1,59 +1,92 @@
 # Bug Snippet Descriptions
 
-This directory contains six intentionally buggy code snippets. Each snippet demonstrates a different type of programming error.
+This file describes the intended behavior and known issue type for each buggy code snippet in the `bug_snippets` directory.
 
-The snippets are written in Python, JavaScript, and Ruby.
-
----
 
 ## Bug 1 - bug1.py
 
-**Intended Behaviour**: Calculate and print the average of a list of numbers.
+### Intended Behaviour
 
-**Issue Type**: Syntax error.
+Calculate the average of a list of numbers and print the result.
 
-**Notes**: Funtion definition is missing a colon (`:`) at the end of the first line. Python requires a colon after a function definition.
+### Issue type
 
----
+Syntax error.
+
+### Notes
+
+The function definition is missing a colon (`:`) after `def calculate_average(numbers)`. Python requires a colon at the end of a function definition.
+
 
 ## Bug 2 - bug2.py
 
-**Intended Behaviour**: Find a user by their ID and return the user's name.
+### Intended Behaviour
 
-**Issue Type**: Runtime exception.
+Search a list of users for a specific user ID and return that user's name. If the user does not exist, the function should handle that situation without causing an exception.
 
-**Notes**: If the requested user cannot be found, the function attempts to access `user["name"]` after the loop. The function should handle the case where no matching user is found.
+### Issue type
 
----
+Runtime exception.
+
+### Notes
+
+When the requested user cannot be found, the function reaches `return user["name"]` after the loop. This can cause an error because there is no matching user to return. The function should handle the case where no matching user exists.
+
 
 ## Bug 3 - bug3.js
 
-**Intended Behaviour**: Calculate the total price after applying a percentage discount.
+### Intended Behaviour
 
-**Issue Type**: Logical error.
+Calculate the total price of several items after applying a percentage discount.
 
-**Notes**: The `discount` value represents a percentage. The code subtracts the discount directly from the subtotal instead of calculating the percentage first.
+For example, if the subtotal is $100 and the discount is 10%, the final total should be $90.
+
+### Issue type
+
+Logical error.
+
+### Notes
+
+The `discount` value represents a percentage, but the code subtracts the discount value directly from the subtotal. The code should calculate the percentage amount before subtracting it.
 
 ## Bug 4 - bug4.js
 
-**Intended Behaviour**: Print every item in an array exactly once.
+### Intended Behaviour
 
-**Issue Type**: Off-by-one error.
+Print every item in an array exactly once.
 
-**Notes**: JavaScript arrays use zero-based indexes. The loop uses `<= items.length`, causing it to run one additional time and attempt to access an index that does not exist.
+### Issue type
+
+Off-by-one error.
+
+### Notes
+
+JavaScript arrays use zero-based indexes. The loop uses `i <= items.length`, which causes the loop to run one time too many. When `i` reaches `items.length`, there is no item at that index. The loop should use `i < items.length`.
 
 ## Bug 5 - bug5.rb
 
-**Intended Behaviour**: Add a list of prices together and print the total rounded to two decimal places.
+### Intended Behaviour
 
-**Issue Type**: Data type misuse.
+Add a list of prices together and print the total rounded to two decimal places.
 
-**Notes**: The prices are stored as strings instead of numbers. The code attempts to add the strings directly to an integer total, which causes a Ruby type error.
+### Issue type
+
+Data type misuse.
+
+### Notes
+
+The prices are stored as strings, such as `"10.50"`, rather than numeric values. The code attempts to add these strings to an integer total, which causes a Ruby type error. The price strings should be converted to numbers before performing the addition.
 
 ## Bug 6 - bug6.py
 
-**Intended Behaviour**: Returns the names of all students who have a score of 50 or higher.
+### Intended Behaviour
 
-**Issue Type**: Logical error.
+Return the names of all students who have a score of 50 or higher.
 
-**Notes**: The code uses `> 50`, which excludes students who score exactly 50. The comparison should use `>= 50` so that a score of 50 is considered passing.
+### Issue type
+
+Logical error.
+
+### Notes
+
+The code uses `> 50`, which excludes students who have exactly 50 points. A score of 50 should count as a passing score, so the comparison should use `>= 50`.
