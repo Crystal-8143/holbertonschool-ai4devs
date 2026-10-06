@@ -3,7 +3,9 @@ def calculate_average(numbers)
     average = total / len(numbers)
     return average
 
-numbers = [10, 20, 30, 40]
+def display_average(numbers):
+    result = calculate_average(numbers)
+    print("Average:", result)
 
-result = calculate_average(numbers)
-print("Average:", result)
+numbers = [10, 20, 30, 40]
+display_average(numbers)
