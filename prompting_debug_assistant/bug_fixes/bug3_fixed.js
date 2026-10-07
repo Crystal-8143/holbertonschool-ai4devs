@@ -1,6 +1,6 @@
 function calculateTotal(price, quantity, discount) {
     const subtotal = price * quantity;
-    const discountAmount = subTotal * (discount / 100);
+    const discountAmount = subtotal * (discount / 100);
     const total = subtotal - discountAmount;
 
     return total;
