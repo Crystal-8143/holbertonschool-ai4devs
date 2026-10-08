@@ -1,35 +1,26 @@
 # Reflection on AI-Assisted Debugging
 
 ## Introduction
-For this exercise, I used AI (ChatGPT) to help identify and fix 6 different bugs across 3 different coding languages (Python, JavaScript, and Ruby). These bugs included a range of common errors from snippets of code: 
-- Syntax errors
-- Runtime issues
-- Logical errors
-- Off-by-one error
-- Data type problem
-
-I first asked the AI to explain what was wrong and to suggest a fix, then applied the the suggestions to the seperate fixed files to test the results. This helped me understand how AI can be useful during debugging but still requires the developer to verify the suggested solution.
+For this exercise, I used AI (ChatGPT) to help identify and fix six different bugs across three programming languages: Python, JavaScript, and Ruby. The bugs included syntax errors, runtime issues, logical errors, an off-by-one error, and a data type problem. I first asked the AI to explain what was wrong and suggest a fix. I then applied the suggestions to separate fixed files and tested the results. This process helped me understand how AI can be useful during debugging while still requiring the developer to verify the suggested solution.
 
 ## AI Strengths
-The AI is extremely fast at identifying and finding solutions to the problem. The easiest bugs that were identified were the syntax errors and the off-by-one error. For example, `bug1.py` was only missing a colon in the Python function definition, and changing `i <= item.length` to `i < items.length` to fix the JavaScript loop in `bug4.js`.
+One of the biggest strengths of AI was how quickly it identified common programming mistakes. The easiest bugs for the AI to solve were the syntax error in `bug1.py` and the off-by-one error in `bug4.js`. For example, `bug1.py` was missing a colon in the function definition, while `bug4.js` used `i <= items.length` instead of `i < items.length`. These were relatively clear problems with straightforward fixes.
 
-The AI also handled the percentage calculation in `bug3.js` well. It correctly identified that the discount was being treated as a dollar amount instead of a percentage and suggested calculating the percentage before subtracting it.
+The AI also correctly identified the logical problem in `bug3.js`. The discount was being treated as a dollar amount instead of a percentage. The AI explained the problem and suggested calculating the percentage before subtracting it from the subtotal.
 
-Overall, AI made the debugging process faster because I could get an explanation and possible solution quickly instead of starting from scratch.
+Overall, AI made the debugging process faster because I could quickly receive an explanation and a possible solution instead of having to search for every problem from scratch.
 
 ## AI Weaknesses
-AI is known to have poor handling of complex architecture and low to medium contextual code awareness. The harder bugs required more attention to the intended behaviour of the program. In the case of `bug2.py`, the AI had to decide what should happen when a user cannot be found. The important part was not just finding an error but understanding that the function should safely return `None`.
+The more difficult bugs required a better understanding of the intended behaviour rather than simply identifying an obvious error. In `bug2.py`, the important issue was deciding what should happen when a requested user could not be found. Returning `None` was appropriate, but this depended on understanding the expected behaviour of the function.
 
-In bug6.py, the code worked, but it used `> 50` when the requirement was that a score of 50 or higher should pass. This is a logical boundary issue that can be easy to miss if only normal examples are tested.
+`bug6.py` was another example. The program ran successfully, but it incorrectly excluded a student with a score of exactly 50. The difference between `> 50` and `>= 50` is small but important. This showed me that AI suggestions still need to be compared against the actual requirements and edge cases.
 
 ## Human Role
-I would not completely trust an AI-generated fix without testing it. AI can identify patterns quickly, but it does not automatically know whether its interpretation matches the requirements of a particular project.
+I would not completely trust an AI-generated solution without testing it. AI can identify common patterns quickly, but it does not automatically know whether its interpretation matches the requirements of a particular project.
 
-Human intuition was important when deciding what the code was supposed to do and checking whether the proposed fix actually matched that behaviour. Running the corrections and comparing the results with the original results was an important part of the process.
-
-While the applied solutions from the AI were successful, therefore I didn't need to do extra manual changes, I still needed to make the final decision about whether each fix was correct.
+Human reasoning was important when determining what the code was supposed to do and checking whether the proposed fixes matched that behaviour. I ran the corrected programs and compared the actual results with the expected results. All six AI-suggested fixes worked, so I did not need to make additional manual code changes. However, I still had to make the final decision about whether each solution was correct.
 
 ## Conclusion
-This exercise showed me that AI can be a useful debugging assistant, especially for identifying common programming mistakes and explaining unfamiliar errors. It can make debugging faster and provide a useful starting point when I am stuck.
+This exercise showed me that AI can be a valuable debugging assistant, especially for identifying common mistakes and explaining unfamiliar code. It can make debugging faster and provide a useful starting point when I am stuck.
 
-However, AI **Should Not** replace manual testing or personal understading of the code. In the real-world AI should be used as a tool to suggest possible causes and solutions and not replace human reasoning, project requirements, tests and documentation to verify results. The developer remains responsible for deciding whether the solution is actually correct.
+However, AI should not replace manual testing or understanding of the code. In real-world development, I would use AI to suggest possible causes and solutions, then use human reasoning, project requirements, tests, and documentation to verify the result. The developer remains responsible for deciding whether the final solution is actually correct.
