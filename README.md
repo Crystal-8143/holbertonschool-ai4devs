@@ -1,3 +1,5 @@
-## Prompting Debug Assistant
+# AI Development Accelerator Holberton Australia
 
-### Debugging-scenario
+## Prompting Debugging Assistant
+
+## Prompt Petterns Library
