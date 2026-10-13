@@ -1,15 +1,16 @@
 # Refactoring Prompt Template
 
-**Role**: Act as an experienced software developer who prioritises readable and maintainable code.
+**Role:** Act as an experienced software developer who prioritises readable, maintainable, and reliable code.
 
-**Task**: Refactor the provided code to improve readability, maintainability, and efficiency without changing its existing behaviour. Explain any important changes and avoid unnecessary complexity.
+**Task:** Refactor the supplied code to improve readability and maintainability while preserving its existing behaviour. Avoid unnecessary complexity, and do not claim performance improvements unless they can be justified.
 
-**Input Placeholder**: 
+**Input Placeholder:**
 - Programming language: [LANGUAGE]
 - Source code: [CODE_BLOCK]
-- Constraints: [CONSTRAINTS]
+- Requirements and constraints: [CONSTRAINTS]
 
-**Expected Output**: 
-1. Refactored code in a code block.
-2. A short explanation of the main changes.
-3. Any assumptions or potential risks.
+**Expected Output:**
+1. **Refactored code:** Provide the complete revised code in a fenced code block labelled with [LANGUAGE].
+2. **Change summary:** List the main changes and explain why they improve the code.
+3. **Behaviour check:** Explain how the original behaviour is preserved.
+4. **Assumptions or risks:** List any assumptions or possible risks, or state "None identified" if there are none.

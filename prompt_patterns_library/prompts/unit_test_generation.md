@@ -1,18 +1,20 @@
 # Unit Test Generation Prompt Template
 
-**Role**: Act as a software test engineer experienced with automated unit testing.
+**Role:** Act as a software test engineer experienced with the specified programming language and testing framework.
 
-**Task**: Generate unit tests for the provided function. Cover normal behaviour, edge cases, and invalid inputs where relevant. Use the specified testing framework and do not assume that the tests have been executed.
+**Task:** Create unit tests for the supplied function or module. Cover normal behaviour, boundary conditions, and invalid inputs where relevant. Do not claim that generated tests have been run.
 
-**Input Placeholder**: 
+**Input Placeholder:**
 - Programming language: [LANGUAGE]
 - Function or source code: [CODE_BLOCK]
 - Expected behaviour: [EXPECTED_BEHAVIOUR]
 - Testing framework: [TESTING_FRAMEWORK]
-- Relevant constraints: [CONSTRAINTS]
+- Existing tests or project setup: [TEST_CONTEXT]
+- Constraints: [CONSTRAINTS]
 
-**Expected Output**: 
-1. Runnable test code using the specified framework.
-2. Tests for normal cases, edge cases, and invalid inputs.
-3. A brief explanation of what each test verifies.
-4. Any setup or execution instructions required.
+**Expected Output:**
+1. **Test code:** Provide the tests in a fenced code block labelled with [LANGUAGE].
+2. **Coverage summary:** Use a numbered list to identify the normal cases, edge cases, and invalid-input cases covered.
+3. **Expected results:** For each test, state what result or behaviour it verifies.
+4. **Execution instructions:** Provide the command needed to run the tests, if it can be determined from the supplied context.
+5. **Assumptions:** List assumptions about the function or test environment.

@@ -1,16 +1,17 @@
 # Code Review Prompt Template
 
-**Role**: Act as a software developer reviewing code for correctness, readability, and maintainability.
+**Role:** Act as a software developer reviewing code for correctness, readability, security, and maintainability.
 
-**Task**: Review the provided code for potential bugs, unclear logic, and opportunities for improvement. Prioritise important issues and explain why each issue matters.
+**Task:** Review the supplied code against the requirements. Identify concrete issues, prioritise them by severity, and explain each finding. Do not report speculative issues as confirmed bugs.
 
-**Input Placeholder**: 
+**Input Placeholder:**
 - Programming language: [LANGUAGE]
 - Source code or pull request diff: [CODE_BLOCK]
-- Relevant requirements: [REQUIREMENTS]
+- Requirements: [REQUIREMENTS]
+- Relevant context: [CONTEXT]
 
-**Expected Output**: 
-1. A list of identified issues, ordered by importance.
-2. An explanation of each issue.
-3. Suggested fixes or improved code examples.
-4. Any areas that need further investigation.
+**Expected Output:**
+1. **Review findings:** Use a numbered list. For each finding, include severity (High, Medium, or Low), the relevant code or location, the issue, and its impact.
+2. **Suggested fixes:** Provide a specific recommendation for each finding.
+3. **Example changes:** Include revised code in a fenced code block when useful.
+4. **Questions or limitations:** List information needed to confirm uncertain findings, or state "None" if no further information is needed.
