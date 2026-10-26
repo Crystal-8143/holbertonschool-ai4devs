@@ -1,0 +1,25 @@
+graph TD
+  A[Frontend App<br/>Web / Mobile Browser] --> BM
+
+  subgraph BM[Backend Monolith - Single Deployable Unit]
+    C[Authentication Module]
+    D[Application Tracking Module]
+    E[Pipeline Board Module]
+    F[Contacts Module]
+    G[Document Storage Module]
+    H[Reminders and Notifications Module]
+    I[Analytics Dashboard Module]
+    J[Calendar Integration Module]
+  end
+
+  C --> K[(Shared Database)]
+  D --> K
+  E --> K
+  F --> K
+  G --> K
+  H --> K
+  I --> K
+
+  G --> L[(File Storage)]
+  H --> M[Email / Push Provider]
+  J --> N[Google / Outlook Calendar API]
