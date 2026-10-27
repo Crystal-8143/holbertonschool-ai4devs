@@ -1,0 +1,37 @@
+graph TD
+  FE[Frontend App<br/>Web / Mobile Browser] --> GW[API Gateway]
+ 
+  GW --> AUTH[Auth Service]
+  GW --> APP[Application Service]
+  GW --> PIPE[Pipeline Service]
+  GW --> CON[Contacts Service]
+  GW --> DOC[Document Service]
+  GW --> REM[Reminder Service]
+  GW --> ANA[Analytics Service]
+  GW --> CAL[Calendar Integration Service]
+ 
+  AUTH --> AUTHDB[(Auth DB)]
+  APP --> APPDB[(Applications DB)]
+  PIPE --> PIPEDB[(Pipeline DB)]
+  CON --> CONDB[(Contacts DB)]
+  DOC --> DOCDB[(Documents DB)]
+  DOC --> FS[(Object Storage)]
+  REM --> REMDB[(Reminders DB)]
+  ANA --> ANADB[(Analytics Store)]
+  CAL --> CALDB[(Calendar DB)]
+ 
+  APP -- publishes events --> BUS{{Message Broker}}
+  PIPE -- publishes events --> BUS
+  REM -- consumes events --> BUS
+  ANA -- consumes events --> BUS
+  CAL -- consumes events --> BUS
+ 
+  PIPE -. validates application .-> APP
+  CON -. links to application .-> APP
+  DOC -. links to application .-> APP
+ 
+  REM --> NOTIF[Notification Service]
+  NOTIF --> EXTMAIL[Email / Push Provider]
+  CAL --> EXTCAL[Google / Outlook Calendar API]
+  AUTH -. issues and verifies tokens .- GW
+ 
