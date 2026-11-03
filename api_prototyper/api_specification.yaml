@@ -1,0 +1,797 @@
+openapi: 3.0.3
+info:
+  title: Job Tracker API
+  version: 1.0.0
+  description: API for managing job applications, hiring stages, notes, contacts, and application progress.
+servers:
+  - url: https://api.example.com/v1
+    description: Production server
+tags:
+  - name: Authentication
+  - name: Applications
+  - name: Stages
+  - name: Notes
+  - name: Contacts
+  - name: Reports
+paths:
+  /auth/register:
+    post:
+      tags: [Authentication]
+      summary: Register a user
+      operationId: registerUser
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        '201':
+          description: User registered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /auth/login:
+    post:
+      tags: [Authentication]
+      summary: Log in and receive JWT tokens
+      operationId: loginUser
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Authentication successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /applications:
+    get:
+      tags: [Applications]
+      summary: List, search, and filter the user's applications
+      operationId: listApplications
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+        - name: stage_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - name: company_name
+          in: query
+          schema:
+            type: string
+            maxLength: 100
+        - name: date_from
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: date_to
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: search
+          in: query
+          description: Search job title, company name, or keywords.
+          schema:
+            type: string
+        - name: sort
+          in: query
+          schema:
+            type: string
+            enum: [applied_date, company_name, job_title, created_at]
+            default: created_at
+        - name: order
+          in: query
+          schema:
+            type: string
+            enum: [asc, desc]
+            default: desc
+      responses:
+        '200':
+          description: Applications returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+    post:
+      tags: [Applications]
+      summary: Create a job application
+      operationId: createApplication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplicationCreate'
+      responses:
+        '201':
+          description: Application created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+  /applications/{id}:
+    parameters:
+      - $ref: '#/components/parameters/ResourceId'
+    get:
+      tags: [Applications]
+      summary: Get an application by ID
+      operationId: getApplication
+      responses:
+        '200':
+          description: Application returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      tags: [Applications]
+      summary: Update an application
+      operationId: updateApplication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplicationUpdate'
+      responses:
+        '200':
+          description: Application updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+    delete:
+      tags: [Applications]
+      summary: Soft-delete an application
+      operationId: deleteApplication
+      responses:
+        '204':
+          description: Application soft-deleted; recoverable for 30 days.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /stages:
+    get:
+      tags: [Stages]
+      summary: List the user's application stages
+      operationId: listStages
+      responses:
+        '200':
+          description: Stages returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Stage'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      tags: [Stages]
+      summary: Create a custom stage
+      operationId: createStage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StageCreate'
+      responses:
+        '201':
+          description: Stage created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stage'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+  /applications/{id}/stage:
+    parameters:
+      - $ref: '#/components/parameters/ResourceId'
+    post:
+      tags: [Stages]
+      summary: Move an application to another stage
+      operationId: moveApplicationStage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StageChangeRequest'
+      responses:
+        '200':
+          description: Application stage updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+  /applications/{id}/stage-history:
+    parameters:
+      - $ref: '#/components/parameters/ResourceId'
+    get:
+      tags: [Stages]
+      summary: Get application stage history
+      operationId: getApplicationStageHistory
+      responses:
+        '200':
+          description: Stage history returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StageHistoryEntry'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /applications/{id}/notes:
+    parameters:
+      - $ref: '#/components/parameters/ResourceId'
+    post:
+      tags: [Notes]
+      summary: Add a note to an application
+      operationId: addApplicationNote
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NoteCreate'
+      responses:
+        '201':
+          description: Note created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Note'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+  /applications/{id}/contacts:
+    parameters:
+      - $ref: '#/components/parameters/ResourceId'
+    post:
+      tags: [Contacts]
+      summary: Add a contact to an application
+      operationId: addApplicationContact
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactCreate'
+      responses:
+        '201':
+          description: Contact created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+  /reports/stages:
+    get:
+      tags: [Reports]
+      summary: Get application counts and progress by stage
+      operationId: getStageReport
+      responses:
+        '200':
+          description: Stage report returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StageReport'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /health:
+    get:
+      tags: [Authentication]
+      summary: Check API and database health
+      operationId: healthCheck
+      security: []
+      responses:
+        '200':
+          description: Service and database health
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: healthy
+                  database:
+                    type: string
+                    example: connected
+                required: [status, database]
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT access token; access tokens expire after 15 minutes.
+  parameters:
+    ResourceId:
+      name: id
+      in: path
+      required: true
+      description: UUIDv4 resource identifier.
+      schema:
+        type: string
+        format: uuid
+    Limit:
+      name: limit
+      in: query
+      description: Maximum number of results (1–100).
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+    Offset:
+      name: offset
+      in: query
+      description: Number of results to skip.
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+  responses:
+    BadRequest:
+      description: Invalid request or unknown request fields.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication is missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found or not accessible to this user.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: Request conflicts with an existing resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ValidationError:
+      description: Request data failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ValidationError'
+  schemas:
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message]
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            request_id:
+              type: string
+              format: uuid
+    ValidationError:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message, fields]
+          properties:
+            code:
+              type: string
+              example: VALIDATION_ERROR
+            message:
+              type: string
+            fields:
+              type: array
+              items:
+                type: object
+                required: [field, reason]
+                properties:
+                  field:
+                    type: string
+                  reason:
+                    type: string
+    RegisterRequest:
+      type: object
+      additionalProperties: false
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        password:
+          type: string
+          format: password
+          minLength: 12
+    LoginRequest:
+      type: object
+      additionalProperties: false
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+    AuthResponse:
+      type: object
+      required: [access_token, refresh_token, token_type, expires_in]
+      properties:
+        access_token:
+          type: string
+        refresh_token:
+          type: string
+        token_type:
+          type: string
+          example: Bearer
+        expires_in:
+          type: integer
+          example: 900
+    ApplicationCreate:
+      type: object
+      additionalProperties: false
+      required: [company_name, job_title, stage_id]
+      properties:
+        company_name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        job_title:
+          type: string
+          minLength: 1
+          maxLength: 150
+        job_url:
+          type: string
+          format: uri
+          maxLength: 2048
+        location:
+          type: string
+          maxLength: 100
+        salary_min:
+          type: integer
+          minimum: 0
+        salary_max:
+          type: integer
+          minimum: 0
+        applied_date:
+          type: string
+          format: date
+        source:
+          type: string
+          enum: [linkedin, company_site, referral, recruiter, job_board, other]
+        stage_id:
+          type: string
+          format: uuid
+    ApplicationUpdate:
+      type: object
+      additionalProperties: false
+      minProperties: 1
+      properties:
+        company_name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        job_title:
+          type: string
+          minLength: 1
+          maxLength: 150
+        job_url:
+          type: string
+          format: uri
+          maxLength: 2048
+        location:
+          type: string
+          maxLength: 100
+        salary_min:
+          type: integer
+          minimum: 0
+        salary_max:
+          type: integer
+          minimum: 0
+        applied_date:
+          type: string
+          format: date
+        source:
+          type: string
+          enum: [linkedin, company_site, referral, recruiter, job_board, other]
+    Application:
+      type: object
+      required: [id, company_name, job_title, stage_id, created_at, updated_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        company_name:
+          type: string
+        job_title:
+          type: string
+        job_url:
+          type: string
+          format: uri
+          nullable: true
+        location:
+          type: string
+          nullable: true
+        salary_min:
+          type: integer
+          nullable: true
+        salary_max:
+          type: integer
+          nullable: true
+        applied_date:
+          type: string
+          format: date
+          nullable: true
+        source:
+          type: string
+          nullable: true
+        stage_id:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    ApplicationListResponse:
+      type: object
+      required: [data, pagination]
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Application'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    Pagination:
+      type: object
+      required: [limit, offset, total, has_more]
+      properties:
+        limit:
+          type: integer
+        offset:
+          type: integer
+        total:
+          type: integer
+        has_more:
+          type: boolean
+    StageCreate:
+      type: object
+      additionalProperties: false
+      required: [name, position]
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 50
+        position:
+          type: integer
+          minimum: 1
+    Stage:
+      type: object
+      required: [id, name, position, is_default]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        position:
+          type: integer
+        is_default:
+          type: boolean
+    StageChangeRequest:
+      type: object
+      additionalProperties: false
+      required: [stage_id]
+      properties:
+        stage_id:
+          type: string
+          format: uuid
+        comment:
+          type: string
+          maxLength: 1000
+    StageHistoryEntry:
+      type: object
+      required: [id, to_stage_id, changed_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        from_stage_id:
+          type: string
+          format: uuid
+          nullable: true
+        to_stage_id:
+          type: string
+          format: uuid
+        comment:
+          type: string
+          nullable: true
+        changed_at:
+          type: string
+          format: date-time
+    NoteCreate:
+      type: object
+      additionalProperties: false
+      required: [content]
+      properties:
+        content:
+          type: string
+          minLength: 1
+          maxLength: 5000
+    Note:
+      type: object
+      required: [id, application_id, content, created_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        application_id:
+          type: string
+          format: uuid
+        content:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+    ContactCreate:
+      type: object
+      additionalProperties: false
+      required: [name]
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        phone:
+          type: string
+          pattern: '^\\+[1-9]\\d{1,14}$'
+        role:
+          type: string
+          maxLength: 100
+    Contact:
+      type: object
+      required: [id, application_id, name]
+      properties:
+        id:
+          type: string
+          format: uuid
+        application_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+          nullable: true
+        phone:
+          type: string
+          nullable: true
+        role:
+          type: string
+          nullable: true
+    StageReport:
+      type: object
+      required: [stages, conversion_rates]
+      properties:
+        stages:
+          type: array
+          items:
+            type: object
+            required: [stage_id, stage_name, application_count]
+            properties:
+              stage_id:
+                type: string
+                format: uuid
+              stage_name:
+                type: string
+              application_count:
+                type: integer
+                minimum: 0
+              average_days_in_stage:
+                type: number
+                minimum: 0
+        conversion_rates:
+          type: array
+          items:
+            type: object
+            required: [from_stage, to_stage, rate]
+            properties:
+              from_stage:
+                type: string
+              to_stage:
+                type: string
+              rate:
+                type: number
+                minimum: 0
+                maximum: 100
+security:
+  - BearerAuth: []
