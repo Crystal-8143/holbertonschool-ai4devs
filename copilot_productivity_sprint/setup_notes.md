@@ -1,7 +1,5 @@
 # Setup Notes: Copilot Productivity Sprint
 
-> **Instructions:** Replace every `<...>` placeholder with your actual environment details and command output. Only list extensions and tools that are installed.
-
 ## 1. Environment Overview
 
 | Item | Value |
