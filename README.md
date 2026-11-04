@@ -52,6 +52,11 @@ API prototyping is the process of building a working, simulated model of an API 
 **Generate API Specification**: Create an OpenAPI 3.0 specification.
 
 ## Copilot Productivity Sprint
+A Copilot Productivity Sprint (or AI sprint) is a short, intensive training or working program designed to help individuals or teams master Microsoft Copilot and embed AI tools into their daily workflows.
+
+**Setup Environment**: Prepare IDE and AI assistant for testing.
+
+**Define Benchmark Tasks**: Create a small but varied set of coding tasks.
 
 ## IDE Workflow Integration
 
