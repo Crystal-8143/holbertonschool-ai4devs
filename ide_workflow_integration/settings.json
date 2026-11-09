@@ -1,0 +1,45 @@
+{
+  // --- Copilot on/off per language ---
+  "github.copilot.enable": {
+    "*": true,
+    "markdown": true,
+    "plaintext": false
+  },
+
+  // --- Language-specific rules ---
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true,
+    "editor.rulers": [88]
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": { "source.fixAll.eslint": "explicit" }
+  },
+  "prettier.semi": true,
+  "prettier.singleQuote": true,
+
+  // --- Code generation rules ---
+  "github.copilot.chat.codeGeneration.instructions": [
+    { "text": "Python: follow Black (88 cols), add type hints and Google-style docstrings." },
+    { "text": "JavaScript: follow the Airbnb style guide, use semicolons and single quotes, prefer const/let and async/await." },
+    { "text": "Never hardcode secrets; read them from environment variables." }
+  ],
+
+  // --- Specialized workflow: code review ---
+  "github.copilot.chat.reviewSelection.instructions": [
+    { "text": "Review for security (injection, secrets, unsafe input), performance (needless loops, N+1 queries), readability and error handling." },
+    { "text": "Label each finding blocker, major, minor or nit, explain why, and suggest a concrete fix." }
+  ],
+
+  // --- Specialized workflow: test generation ---
+  "github.copilot.chat.testGeneration.instructions": [
+    { "text": "Use pytest for Python and Jest for JavaScript. Cover happy path, edge cases and error cases. Name tests test_<function>_<scenario>." }
+  ],
+
+  // --- Specialized workflow: commit messages ---
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+    { "text": "Use Conventional Commits (feat, fix, docs, refactor, test, chore). Subject under 72 characters, imperative mood." }
+  ]
+}

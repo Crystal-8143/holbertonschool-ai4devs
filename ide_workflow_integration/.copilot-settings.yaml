@@ -1,0 +1,38 @@
+# Project-level AI assistant configuration
+# Human-readable source of truth; the enforced equivalents live in .vscode/settings.json
+
+languages:
+  python:
+    style_guide: "black"
+    line_length: 88
+    type_hints: true
+    docstrings: "google"
+    test_framework: "pytest"
+  javascript:
+    style_guide: "airbnb"
+    semicolons: true
+    quotes: "single"
+    test_framework: "jest"
+  markdown:
+    wrap: false
+    headings: "sentence case"
+
+workflows:
+  code_review:
+    enabled: true
+    focus_areas: ["security", "performance", "readability", "error-handling"]
+    severity_levels: ["blocker", "major", "minor", "nit"]
+  doc_generator:
+    enabled: true
+    targets: ["docstrings", "README", "changelog"]
+    style: "concise, imperative mood, include usage example"
+  test_generator:
+    enabled: true
+    cover: ["happy path", "edge cases", "error cases"]
+    naming: "test_<function>_<scenario>"
+  commit_messages:
+    enabled: true
+    format: "conventional-commits"
+
+privacy:
+  exclude_files: [".env", "*.pem", "secrets/**"]
