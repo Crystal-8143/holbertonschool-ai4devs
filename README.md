@@ -59,6 +59,11 @@ A Copilot Productivity Sprint (or AI sprint) is a short, intensive training or w
 **Define Benchmark Tasks**: Create a small but varied set of coding tasks.
 
 ## IDE Workflow Integration
+IDE workflow integration brings external automation, cloud services, and visual pipelines directly into your development environment, eliminating context-switching between tools.
+
+**Document Current Workflow**: Establish a productivity baseline.
+
+**Configure AI Assistant**: Set up AI-powered workflows in the IDE.
 
 ## Legacy Code Interpreter
 
