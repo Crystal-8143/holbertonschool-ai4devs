@@ -66,13 +66,25 @@ IDE workflow integration brings external automation, cloud services, and visual 
 **Configure AI Assistant**: Set up AI-powered workflows in the IDE.
 
 ## Legacy Code Interpreter
+Legacy Code Interpreter typically refers to a specialized AI tool, extension, or agentic framework designed to reverse-engineer, document, and analyze old or undocumented software ecosystems. By utilizing deep static and dynamic code parsing, it maps how data travels through an outdated system so engineers can safely update it without breaking core business rules.
+
+**Codebase Overview**: Provide a structured overview of the chosen legacy codebase.
+
+**AI Explanations of Complex Code**: Use AI to explain difficult code sections.
+
+**Risk Assessment**: Identify and prioritize risks in the codebase.
 
 ## Multi-Language Code Generator
+Multi-language code generators translate natural language prompts, JSON schemas, or source code from one programming language into multiple target stacks.
 
 ## Smart Bug Bounty
+A smart bug bounty program uses automated tools, AI-driven workflows, or continuous on-chain testing to find software and Smart Contract Bug Bounties faster and more efficiently than traditional manual audits.
 
 ## AI Code Review Simulator
+An AI Code Review Simulator or tool helps test, analyze, and provide feedback on code quality, security, performance, and best practices before or during a pull request.
 
 ## AI-Powered Startup MVP Builder
+AI-powered Minimum Viable Product (MVP) builders allow founders to go from a plain-English concept to a functional, full-stack application or design prototype in hours or days instead of months.
 
 ## AI-Enhanced Team Hackathon
+An AI-enhanced team hackathon is a time-boxed, hands-on event where cross-functional team members use generative AI and software tools (such as ChatGPT, Claude, Gemini, or Microsoft Copilot) to build functional prototypes, automate workflows, or solve real business problems.
