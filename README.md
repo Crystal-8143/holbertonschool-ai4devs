@@ -77,6 +77,10 @@ Legacy Code Interpreter typically refers to a specialized AI tool, extension, or
 ## Multi-Language Code Generator
 Multi-language code generators translate natural language prompts, JSON schemas, or source code from one programming language into multiple target stacks.
 
+**Define Cross-Language Specification**: Establish algorithm requirements and test cases.
+
+**Create Reference Implementation**: Implement the algorithm in one language (baseline).
+
 ## Smart Bug Bounty
 A smart bug bounty program uses automated tools, AI-driven workflows, or continuous on-chain testing to find software and Smart Contract Bug Bounties faster and more efficiently than traditional manual audits.
 
