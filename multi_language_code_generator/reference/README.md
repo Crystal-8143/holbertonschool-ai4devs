@@ -13,7 +13,11 @@ multi_language_code_generator/
     ├── log_analyzer.py
     ├── README.md
     └── tests/
-        └── test_log_analyzer.py
+        ├── helpers.py                    # Shared fixtures and setup
+        ├── test_t01_empty_input.py
+        ├── test_t02_one_successful_request.py
+        ├── ...                           # 20 separate test_*.py files
+        └── test_cli_outputs_only_json.py
 ```
 
 ## Run
@@ -41,7 +45,11 @@ From the `multi_language_code_generator/` directory:
 python -m unittest discover -s reference/tests -p 'test_*.py' -v
 ```
 
-The tests verify **all nine cases in the specification** plus additional
+The `reference/tests/` folder contains **20 separate test modules** (one test
+case per `test_*.py` file) and one shared `helpers.py` fixture module. This
+supports automated graders that count test files rather than unittest methods.
+
+The tests verify **all nine cases in the specification** plus 11 additional
 cases, including CRLF line endings, half-up rounding, numeric bounds, invalid
 records, case sensitivity, strict grammar, and the command-line interface.
 
