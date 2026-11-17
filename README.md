@@ -84,6 +84,12 @@ Multi-language code generators translate natural language prompts, JSON schemas,
 ## Smart Bug Bounty
 A smart bug bounty program uses automated tools, AI-driven workflows, or continuous on-chain testing to find software and Smart Contract Bug Bounties faster and more efficiently than traditional manual audits.
 
+**Collect or Create Buggy Snippets**: Prepare flawed code snippets across multiple languages.
+
+**Debug with AI Assistance**: Use AI to analyze and explain bugs.
+
+**Validate and Fix Code**: Apply fixes and verify correctness.
+
 ## AI Code Review Simulator
 An AI Code Review Simulator or tool helps test, analyze, and provide feedback on code quality, security, performance, and best practices before or during a pull request.
 
